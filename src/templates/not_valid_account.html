@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <title>Data for user: {{ name }}</title>
+    <title>Invalid Search Query</title>
 </head>
 <body>
     <div id="wrapper">  <!--WRAPPER START-->
@@ -28,29 +28,19 @@
             <table>
                 <tr>
                     <td class="label">Name:</td>
-                    <td class="value">{{ name }}</td>
+                    <td class="value">???</td>
                 </tr>
                 <tr>
                     <td class="label">Handle:</td>
-                    <td class="value">{{ handle }}</td>
+                    <td class="value">???</td>
                 </tr>
                 <tr>
                     <td class="label">Score:</td>
-                    <td class="value">{{ score }}</td>
+                    <td class="value">???</td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                    {{ degree }} degrees to the account: <a href="https://twitter.com/{{ kingpin }}">@{{ kingpin }}</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                    {% for name in route %}
-                        {{ name }}
-                        {% if name != kingpin %}
-                            -->
-                        {% endif %}
-                    {% endfor %}
+                        You entered a twitter handle that does not exist. Remember to exclude the at character.
                     </td>
                 </tr>
             </table>

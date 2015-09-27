@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <title>Data for user: {{ name }}</title>
+    <title>Nothing to Hide</title>
 </head>
 <body>
     <div id="wrapper">  <!--WRAPPER START-->
@@ -25,35 +25,11 @@
             </table>
         </div>              <!--HEADER END-->
         <div id="content">  <!--CONTENT START-->
-            <table>
-                <tr>
-                    <td class="label">Name:</td>
-                    <td class="value">{{ name }}</td>
-                </tr>
-                <tr>
-                    <td class="label">Handle:</td>
-                    <td class="value">{{ handle }}</td>
-                </tr>
-                <tr>
-                    <td class="label">Score:</td>
-                    <td class="value">{{ score }}</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                    {{ degree }} degrees to the account: <a href="https://twitter.com/{{ kingpin }}">@{{ kingpin }}</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                    {% for name in route %}
-                        {{ name }}
-                        {% if name != kingpin %}
-                            -->
-                        {% endif %}
-                    {% endfor %}
-                    </td>
-                </tr>
-            </table>
+            <p>A common assumption when considering invasive surveillance is that those with nothing to hide have
+            nothing to fear. This website is to show you just how close to that action you actually are. In the style
+            of &quot;Six Degrees to Separation,&quot; we have collected several &quot;degrees&quot; worth of twitter
+            followers from various twitter accounts on the front lines of political subversiveness; accounts you can
+            safely assume are being watched.</p>
         </div>              <!--CONTENT END-->
     </div>              <!--WRAPPER END-->
 </body>
