@@ -24,7 +24,7 @@ def get_user_by_handle(user_handle):
     user_name = user.name
     user_score = 100
 
-    path = networkx.algorithms.shortest_path(graph, user.screen_name, '@')
+    path = networkx.algorithms.shortest_path(graph, user.screen_name.lower(), '@')
     path.pop()  # Remove last element, whih is the final placeholder
 
     user_data = {

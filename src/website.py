@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import redirect
 from flask import url_for
-from src.libs.web_interface import get_user_by_handle
+from libs.web_interface import get_user_by_handle
 
 app = Flask(__name__)
 
