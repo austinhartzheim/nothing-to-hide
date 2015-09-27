@@ -3,19 +3,58 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>Data for user: {{ name }}</title>
 </head>
 <body>
-    <div id="wrapper">
-        <h1>Data for user: {{ name }}</h1>
-        <ul>
-            <li>Name: {{ name }}</li>
-            <li>Handle: {{ handle }}</li>
-            <li>Score: {{ score }}</li>
-            <li>Degree: {{ degree }}</li>
-        </ul>
-        <h2>Path to evil:</h2>
-        <img class="graph" src="../static/sample_graph.jpg" />
-    </div>
+    <div id="wrapper">  <!--WRAPPER START-->
+        <div id="header">   <!--HEADER START-->
+            <a href="{{ url_for('index') }}"><img class="icon" src="../static/nsa_cat.jpg" alt="Index"/></a>
+            <h1>Nothing to Hide:</h1>
+            <h2>Six degrees of Criminality...</h2>
+            <table>
+                <tr>
+                    <td>Search for a user:</td>
+                    <td>
+                        <form>
+                            <input type="text" id="query" value="">
+                            <input type="button" onclick="window.location.href = '/u/' + document.getElementById('query').value;" value="Search">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>              <!--HEADER END-->
+        <div id="content">  <!--CONTENT START-->
+            <table>
+                <tr>
+                    <td class="label">Name:</td>
+                    <td class="value">{{ name }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Handle:</td>
+                    <td class="value">{{ handle }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Score:</td>
+                    <td class="value">{{ score }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    {{ degree }} degrees to Kingpin: <a href="https://twitter.com/{{ kingpin }}">@{{ kingpin }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    {% for name in route %}
+                        {{ name }}
+                        {% if name != kingpin %}
+                            -->
+                        {% endif %}
+                    {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </div>              <!--CONTENT END-->
+    </div>              <!--WRAPPER END-->
 </body>
 </html>
