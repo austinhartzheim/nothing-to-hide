@@ -1,7 +1,6 @@
 '''
 Classes to perform crawling of pages.
 '''
-import time
 import networkx
 import tqdm
 import tweepy
@@ -13,7 +12,7 @@ class Crawler():
     pass
 
 
-class RecursiveCrawl(Crawler):
+class RecursiveCrawler(Crawler):
     '''
     Recursively crawl the followers lists to generate a larger list of
     known nodes.
@@ -32,13 +31,11 @@ class RecursiveCrawl(Crawler):
         '''
         Find the users who follow a given account.
         '''
-        try:
-            for follower in tweepy.Cursor(self.api.followers, handle).items():
-                if follower.followers_count > 0:
-                    self.graph.add_node(follower.screen_name)
-                    self.graph.add_edge(follower.screen_name, handle)
-        except tweepy.TweepError:
-            time.sleep(15 * 60)
+        for follower in tqdm.tqdm(tweepy.Cursor(self.api.followers, handle).items()):
+            if follower.followers_count > 0:
+                self.graph.add_node(follower.screen_name)
+                self.graph.add_edge(follower.screen_name, handle)
+        self.write_graph_file()
 
     def read_graph_file(self):
         '''
@@ -56,7 +53,6 @@ class RecursiveCrawl(Crawler):
         '''
         for user in tqdm.tqdm(self.leaves):
             self.fetch_followers(user)
-        self.write_graph_file()
 
     def update_leaves(self):
         '''
