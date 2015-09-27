@@ -1,4 +1,5 @@
 import libs.api_setup
+import libs.crawlers
 import networkx
 import tweepy
 
@@ -14,7 +15,7 @@ def get_user_by_handle(user_handle):
     :param user_handle: String of user handle EXCLUDING the '@' character
     :return: dictionary of the given user's information
     '''
-    api = libs.api_setup.create_tweepy_api()
+    api = libs.api_setup.create_tweepy_api(rate_limit_wait=False)
 
     # Fetch user information
     try:
@@ -23,13 +24,22 @@ def get_user_by_handle(user_handle):
         if err.response.status_code == 404:
             raise KeyError('User name does not exist')
 
-    # TODO: Lookup user in the graph
     graph.add_node(user.screen_name)
+
+    try:
+        path = networkx.algorithms.shortest_path(graph, user.screen_name.lower(), '@')
+        path.pop()  # Remove last element, whih is the final placeholder
+    except networkx.exception.NetworkXNoPath:
+        crawler = libs.crawlers.RecursiveCrawler(api)
+        try:
+            crawler.fetch_following(user.screen_name)
+        except tweepy.TweepError:
+            print('Rate limit hit. Relying on existing graph')
+        path = networkx.algorithms.shortest_path(graph, user.screen_name.lower(), '@')
+        path.pop()  # Remove last element, whih is the final placeholder
+
     user_name = user.name
     user_score = 100
-
-    path = networkx.algorithms.shortest_path(graph, user.screen_name.lower(), '@')
-    path.pop()  # Remove last element, whih is the final placeholder
 
     user_data = {
         'handle': user_handle,
