@@ -1,7 +1,9 @@
 '''
 Classes to perform crawling of pages.
 '''
+import time
 import networkx
+import tqdm
 import tweepy
 
 GRAPH_FILE = 'test.yaml'  # TODO: remove hardecoded file
@@ -30,10 +32,13 @@ class RecursiveCrawl(Crawler):
         '''
         Find the users who follow a given account.
         '''
-        for follower in tweepy.Cursor(self.api.followers, handle).items():
-            if follower.followers_count > 0:
-                self.graph.add_node(follower.screen_name)
-                self.graph.add_edge(follower.screen_name, handle)
+        try:
+            for follower in tweepy.Cursor(self.api.followers, handle).items():
+                if follower.followers_count > 0:
+                    self.graph.add_node(follower.screen_name)
+                    self.graph.add_edge(follower.screen_name, handle)
+        except tweepy.TweepError:
+            time.sleep(15 * 60)
 
     def read_graph_file(self):
         '''
@@ -49,14 +54,14 @@ class RecursiveCrawl(Crawler):
         Run a round for all users that do not have known followers in
         the current graph state.
         '''
-        for user in self.leaves:
+        for user in tqdm.tqdm(self.leaves):
             self.fetch_followers(user)
         self.write_graph_file()
 
     def update_leaves(self):
         '''
-        Find all leaf nodes (nodes with no incomming connections). The
-        followers for these noes have not been downloaded.
+        Find all leaf nodes (nodes with no incoming connections). The
+        followers for these nodes have not been downloaded.
         '''
         self.leaves = [n for n in self.graph if self.graph.in_degree(n) == 0]
 
