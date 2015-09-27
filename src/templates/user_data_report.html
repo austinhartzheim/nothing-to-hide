@@ -46,9 +46,9 @@
                 <tr>
                     <td colspan="2">
                     {% for name in route %}
-                        {{ name }}
+                        <a href="http://twitter.com/{{ name }}">@{{ name }}</a>
                         {% if name != kingpin %}
-                            -->
+                            &#10140;
                         {% endif %}
                     {% endfor %}
                     </td>
