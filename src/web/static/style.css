@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    text-align: center;
+}
+b,strong {
+    font-weight: bold;
+}
+img.graph {
+    height: auto;
+    width: 750px;
+    max-width: 100%;
+}
+#wrapper {
+    height: auto;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
