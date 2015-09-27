@@ -16,9 +16,9 @@
                 <tr>
                     <td>Search for a user:</td>
                     <td>
-                        <form>
+                        <form onsubmit="window.location.href = '/u/' + document.getElementById('query').value; return false;">
                             <input type="text" id="query" value="">
-                            <input type="button" onclick="window.location.href = '/u/' + document.getElementById('query').value; return false;" value="Search">
+                            <input type="submit"  value="Search">
                         </form>
                     </td>
                 </tr>
