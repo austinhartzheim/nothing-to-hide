@@ -17,8 +17,12 @@ def get_user_by_handle(user_handle):
     api = libs.api_setup.create_tweepy_api()
 
     # Fetch user information
-    user = api.get_user(user_handle)
-    # TODO: Check if the user object exists
+    try:
+        user = api.get_user(user_handle)
+    except tweepy.error.TweepError as err:
+        if err.response.status_code == 404:
+            raise KeyError('User name does not exist')
+
     # TODO: Lookup user in the graph
     graph.add_node(user.screen_name)
     user_name = user.name
