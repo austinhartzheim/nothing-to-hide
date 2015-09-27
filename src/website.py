@@ -25,7 +25,7 @@ def lookup_user(user_handle):
     user_name = data['name']
     user_score = data['score']
     user_route = data['route']
-    user_degree = len(user_route)
+    user_degree = len(user_route) - 1
     user_kingpin = user_route[-1]
 
     return render_template('user_data_report.html', handle=user_handle,
