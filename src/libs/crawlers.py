@@ -9,6 +9,9 @@ GRAPH_FILE = 'test.yaml'  # TODO: remove hardecoded file
 
 
 class Crawler():
+    '''
+    Parent crawler class.
+    '''
     pass
 
 
@@ -33,16 +36,17 @@ class RecursiveCrawler(Crawler):
         '''
         for follower in tqdm.tqdm(tweepy.Cursor(self.api.followers, handle).items()):
             if follower.followers_count > 0:
-                self.graph.add_node(follower.screen_name)
-                self.graph.add_edge(follower.screen_name, handle)
+                self.graph.add_node(follower.screen_name.lower())
+                self.graph.add_edge(follower.screen_name.lower(), handle.lower())
         self.write_graph_file()
 
     def fetch_following(self, handle):
         self.graph.add_node(handle)
-        for userid in tqdm.tqdm(tweepy.Cursor(self.api.followers_ids, handle).items()):
+        for userid in tqdm.tqdm(tweepy.Cursor(self.api.friends_ids, handle).items()):
             user = self.api.get_user(userid)
-            self.graph.add_node(user.screen_name)
-            self.graph.add_edge(handle, user.screen_name)
+            self.graph.add_node(user.screen_name.lower())
+            self.graph.add_edge(handle, user.screen_name.lower())
+        self.write_graph_file()
 
     def read_graph_file(self):
         '''

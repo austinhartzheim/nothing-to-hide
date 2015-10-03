@@ -12,17 +12,12 @@
             <a href="{{ url_for('index') }}"><img class="icon" src="../static/nsa_cat.jpg" alt="Index"/></a>
             <h1>Nothing to Hide:</h1>
             <h2>Six Degrees of Criminality...</h2>
-            <table>
-                <tr>
-                    <td>Search for a user:</td>
-                    <td>
+            <div>Search for a user: 
                         <form onsubmit="window.location.href = '/u/' + document.getElementById('query').value; return false;">
                             <input type="text" id="query" value="">
                             <input type="submit"  value="Search">
                         </form>
-                    </td>
-                </tr>
-            </table>
+            </div>
         </div>              <!--HEADER END-->
         <div id="content">  <!--CONTENT START-->
             <table>
@@ -33,10 +28,6 @@
                 <tr>
                     <td class="label">Handle:</td>
                     <td class="value">{{ handle }}</td>
-                </tr>
-                <tr>
-                    <td class="label">Score:</td>
-                    <td class="value">{{ score }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">
